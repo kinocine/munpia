@@ -11,7 +11,7 @@
             color: #e6dfd3;
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -19,29 +19,50 @@
 
         h1 {
             font-family: 'Georgia', serif;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
             color: #d4af37; /* 금빛 타이틀 */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            color: #a89f91;
-            margin-bottom: 40px;
-            font-style: italic;
+        /* 검색창 영역 */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 25px;
+            padding: 0 10px;
+            box-sizing: border-box;
         }
 
-        /* 책장 레이아웃 */
+        .search-input {
+            width: 100%;
+            background: #2a221d;
+            border: 1px solid #54453b;
+            border-radius: 20px;
+            padding: 10px 18px;
+            color: #e6dfd3;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+        }
+
+        /* 책장 레이아웃 (기본 PC는 다단 구성, 모바일에서 한 줄에 4개) */
         .bookshelf {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 40px 30px;
-            max-width: 1200px;
+            grid-template-columns: repeat(4, 1fr); /* 한 라인에 무조건 4개 */
+            gap: 10px;
+            max-width: 900px;
             width: 100%;
-            padding: 20px;
-            border-bottom: 16px solid #3a2f28; /* 책장 선반 느낌 */
-            box-shadow: 0 20px 20px rgba(0,0,0,0.5);
+            padding: 15px 10px;
+            border-bottom: 12px solid #3a2f28; /* 책장 선반 느낌 */
+            box-shadow: 0 15px 15px rgba(0,0,0,0.5);
             background: rgba(40, 32, 26, 0.5);
             border-radius: 8px;
             box-sizing: border-box;
@@ -50,7 +71,8 @@
         /* 책 링크 및 오브젝트 */
         .book-wrapper {
             position: relative;
-            perspective: 1000px;
+            perspective: 800px;
+            width: 100%;
         }
 
         .book-link {
@@ -59,23 +81,25 @@
             display: block;
         }
 
+        /* 모바일 4단 정렬을 위한 콤팩트한 북 스타일 */
         .book {
-            border-left: 12px solid rgba(255, 255, 255, 0.15); /* 책등 효과 */
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), 
-                        inset 1px 1px 0px rgba(255,255,255,0.2);
-            border-radius: 3px 8px 8px 3px;
-            height: 260px;
-            padding: 20px 15px;
+            border-left: 6px solid rgba(255, 255, 255, 0.15); /* 책등 효과 */
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.5), 
+                        inset 1px 1px 0px rgba(255,255,255,0.15);
+            border-radius: 2px 5px 5px 2px;
+            height: 140px; /* 모바일 대응으로 높이 축소 */
+            padding: 10px 6px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-sizing: border-box;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
 
         .book-wrapper:hover .book {
-            transform: rotateY(-10deg) translateZ(10px);
-            box-shadow: 15px 15px 25px rgba(0,0,0,0.7);
+            transform: rotateY(-8deg) translateZ(5px);
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.6);
         }
 
         /* 책 표지 4가지 색상 랜덤 순환용 */
@@ -85,58 +109,62 @@
         .color-3 { background: linear-gradient(135deg, #543d2b 0%, #2e2116 100%); } /* 브라운 */
 
         .book-title {
-            font-size: 1.15rem;
+            font-size: 0.75rem; /* 모바일 가독성을 위해 크기 조절 */
             font-weight: bold;
-            line-height: 1.4;
+            line-height: 1.3;
             color: #f4ebd9;
-            word-break: keep-all;
-            margin-bottom: 6px;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* 세 줄 제한 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 4px;
         }
 
         .book-subtitle {
-            font-size: 0.85rem;
+            font-size: 0.6rem;
             color: #c2b59b;
-            line-height: 1.3;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* 두 줄 제한 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .book-meta {
-            font-size: 0.75rem;
+            font-size: 0.55rem;
             color: #a89f91;
             text-align: right;
             border-top: 1px dashed rgba(255, 255, 255, 0.1);
-            padding-top: 8px;
+            padding-top: 4px;
+            white-space: nowrap;
         }
 
-        /* 책 수정용 관리 버턴 */
+        /* 책 수정용 관리 버튼 */
         .btn-edit {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.6);
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+            opacity: 0.8; /* 모바일 조작 편의성을 위해 기본 노출 상승 */
             z-index: 10;
-        }
-
-        .book-wrapper:hover .btn-edit {
-            opacity: 1;
         }
 
         /* [+] 추가 버튼 디자인 */
         .add-card {
             border: 2px dashed #54453b;
-            border-radius: 8px;
-            height: 260px;
+            border-radius: 5px;
+            height: 140px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -144,6 +172,7 @@
             cursor: pointer;
             transition: background 0.3s, border-color 0.3s;
             color: #8c7b6e;
+            box-sizing: border-box;
         }
 
         .add-card:hover {
@@ -153,13 +182,13 @@
         }
 
         .add-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 5px;
             font-weight: 300;
         }
 
         .add-text {
-            font-size: 0.9rem;
+            font-size: 0.7rem;
         }
 
         /* 입력 팝업(모달) 스타일 */
@@ -177,30 +206,31 @@
             background: #2a221d;
             border: 1px solid #4d3e35;
             border-radius: 10px;
-            padding: 30px;
+            padding: 20px;
             width: 90%;
-            max-width: 450px;
+            max-width: 400px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-sizing: border-box;
         }
 
         .modal-title {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             color: #d4af37;
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 1px solid #4d3e35;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #a89f91;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .form-group input {
@@ -208,10 +238,10 @@
             background: #1e1a17;
             border: 1px solid #4d3e35;
             color: #e6dfd3;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .form-group input:focus {
@@ -222,14 +252,14 @@
         .modal-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 4px;
             border: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             font-weight: bold;
         }
@@ -240,22 +270,59 @@
         .btn-secondary:hover { background: #5d4d42; }
         .btn-danger { background: #8a2424; color: #fff; }
         .btn-danger:hover { background: #b03535; }
+
+        /* 로딩 스피너 */
+        .loading {
+            grid-column: span 4;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #d4af37;
+            padding: 30px 0;
+        }
+
+        /* 데스크톱 크기 보정 (데스크톱에서도 레이아웃이 일그러지지 않도록 조절) */
+        @media (min-width: 600px) {
+            .book {
+                height: 180px;
+                padding: 15px 10px;
+            }
+            .book-title {
+                font-size: 0.95rem;
+            }
+            .book-subtitle {
+                font-size: 0.75rem;
+            }
+            .book-meta {
+                font-size: 0.65rem;
+            }
+            .add-card {
+                height: 180px;
+            }
+            .add-icon {
+                font-size: 2.5rem;
+            }
+            .add-text {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <h1>소설가의 방</h1>
-    <div class="subtitle">생각이 머무는 곳, 집필 중인 연작소설들</div>
-
-    <div class="bookshelf" id="bookshelf">
-        <!-- 책 리스트와 [+] 버튼이 자바스크립트로 그려집니다 -->
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="소설 제목 또는 부제 검색..." oninput="filterBooks()">
     </div>
 
-    <!-- 책 입력/수정 모달창 -->
+    <div class="bookshelf" id="bookshelf">
+        <div class="loading">서재에서 책을 꺼내오는 중입니다...</div>
+    </div>
+
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <h3 class="modal-title" id="modalTitle">새 책 등록하기</h3>
-            <input type="hidden" id="editIndex" value="">
+            <input type="hidden" id="editRowIndex" value="">
             
             <div class="form-group">
                 <label for="bookTitle">소설 제목</label>
@@ -278,47 +345,43 @@
                 </div>
                 <div>
                     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-                    <button class="btn btn-primary" onclick="saveBook()">저장</button>
+                    <button class="btn btn-primary" id="btnSave" onclick="saveBook()">저장</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 초기 샘플 데이터 (로컬 스토리지에 데이터가 없을 때만 사용됨)
-        const defaultNovels = [
-            {
-                title: "첫 번째 이야기 제목",
-                subtitle: "여기에 작은 부제가 들어갑니다",
-                url: "https://docs.google.com/document/d/YOUR_DOC_ID_1/edit",
-                updatedAt: "2026-07-15"
-            },
-            {
-                title: "달 그림자를 밟는 밤",
-                subtitle: "사라진 기억에 관한 기록",
-                url: "https://docs.google.com/document/d/YOUR_DOC_ID_2/edit",
-                updatedAt: "2026-07-10"
-            }
-        ];
+        // ⚠️ 구글 앱스 스크립트 배포 후 얻은 웹 앱 URL을 여기에 붙여넣어 주세요!
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwc0guFpQ6vaMtbcyw9SAVmOXGj6QpFW7uXrb4xtdLPVJTX_Pfk4iomMdsGYLAt7C3qDg/exec"; 
 
-        // 로컬스토리지에서 데이터 불러오기
-        let novels = JSON.parse(localStorage.getItem('novels'));
-        if (!novels) {
-            novels = defaultNovels;
-            localStorage.setItem('novels', JSON.stringify(novels));
-        }
-
+        let novels = []; // 시트에서 가져온 전체 책 데이터 저장용
         const bookshelf = document.getElementById('bookshelf');
         const modal = document.getElementById('modal');
 
-        // 화면 갱신 함수
-        function renderBooks() {
+        // 앱스 스크립트 API를 활용한 데이터 호출 (GET)
+        async function fetchNovels() {
+            try {
+                bookshelf.innerHTML = '<div class="loading">서재에서 책을 꺼내오는 중입니다...</div>';
+                const response = await fetch(WEB_APP_URL);
+                if (!response.ok) throw new Error('네트워크 응답 오류');
+                novels = await response.json();
+                renderBooks(novels);
+            } catch (error) {
+                console.error("데이터 가져오기 실패:", error);
+                bookshelf.innerHTML = '<div class="loading" style="color:#b03535;">책을 불러오지 못했습니다.<br>API 주소 확인이 필요합니다.</div>';
+            }
+        }
+
+        // 화면 갱신 함수 (필터된 배열을 매개변수로 받음)
+        function renderBooks(dataList) {
             bookshelf.innerHTML = '';
 
-            // 1. 등록된 책들 그리기
-            novels.forEach((novel, index) => {
-                // 디자인 다양화를 위해 인덱스 기반으로 4개 배경색 무작위/순환 지정
-                const colorClass = `color-${index % 4}`;
+            // 1. 책 리스트 그리기
+            dataList.forEach((novel) => {
+                // 디자인 무작위 순환용 인덱스는 API 행번호 기준으로 자연스럽게 설정
+                const colorIndex = (novel.rowIndex || 0) % 4;
+                const colorClass = `color-${colorIndex}`;
 
                 const wrapper = document.createElement('div');
                 wrapper.className = 'book-wrapper';
@@ -330,10 +393,10 @@
                                 <div class="book-title">${novel.title}</div>
                                 <div class="book-subtitle">${novel.subtitle || ''}</div>
                             </div>
-                            <div class="book-meta">${novel.updatedAt}</div>
+                            <div class="book-meta">${novel.updatedAt ? novel.updatedAt.substring(0, 10) : ''}</div>
                         </div>
                     </a>
-                    <button class="btn-edit" onclick="openEditModal(${index})" title="수정">✏️</button>
+                    <button class="btn-edit" onclick="openEditModal(${novel.rowIndex})" title="수정">✏️</button>
                 `;
                 bookshelf.appendChild(wrapper);
             });
@@ -349,10 +412,24 @@
             bookshelf.appendChild(addCard);
         }
 
+        // 실시간 검색 기능 (소설 제목 및 부제 검색 매칭)
+        function filterBooks() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderBooks(novels);
+                return;
+            }
+            const filtered = novels.filter(n => 
+                (n.title && n.title.toLowerCase().includes(query)) || 
+                (n.subtitle && n.subtitle.toLowerCase().includes(query))
+            );
+            renderBooks(filtered);
+        }
+
         // 모달 열기 (등록 모드)
         function openAddModal() {
             document.getElementById('modalTitle').innerText = '새 책 등록하기';
-            document.getElementById('editIndex').value = '';
+            document.getElementById('editRowIndex').value = '';
             document.getElementById('bookTitle').value = '';
             document.getElementById('bookSubtitle').value = '';
             document.getElementById('bookUrl').value = '';
@@ -360,14 +437,16 @@
             modal.style.display = 'flex';
         }
 
-        // 모달 열기 (수정 모드)
-        function openEditModal(index) {
-            event.stopPropagation(); // 책 링크 타지 않도록 방지
+        // 모달 열기 (수정 모드 - 시트의 행 번호(rowIndex) 기준)
+        function openEditModal(rowIndex) {
+            event.stopPropagation(); // 책 링크 타기 방지
             event.preventDefault();
 
-            const novel = novels[index];
+            const novel = novels.find(n => n.rowIndex === rowIndex);
+            if (!novel) return;
+
             document.getElementById('modalTitle').innerText = '소설 정보 수정';
-            document.getElementById('editIndex').value = index;
+            document.getElementById('editRowIndex').value = rowIndex;
             document.getElementById('bookTitle').value = novel.title;
             document.getElementById('bookSubtitle').value = novel.subtitle || '';
             document.getElementById('bookUrl').value = novel.url;
@@ -380,9 +459,9 @@
             modal.style.display = 'none';
         }
 
-        // 저장 처리 (등록 및 수정 공용)
-        function saveBook() {
-            const index = document.getElementById('editIndex').value;
+        // API 연동 저장 처리 (등록 및 수정 공용 POST 통신)
+        async function saveBook() {
+            const rowIndex = document.getElementById('editRowIndex').value;
             const title = document.getElementById('bookTitle').value.trim();
             const subtitle = document.getElementById('bookSubtitle').value.trim();
             const url = document.getElementById('bookUrl').value.trim();
@@ -399,29 +478,72 @@
             const dd = String(today.getDate()).padStart(2, '0');
             const formattedDate = `${yyyy}-${mm}-${dd}`;
 
-            const novelData = { title, subtitle, url, updatedAt: formattedDate };
+            const btnSave = document.getElementById('btnSave');
+            btnSave.innerText = "저장 중...";
+            btnSave.disabled = true;
 
-            if (index === '') {
-                // 신규 등록
-                novels.push(novelData);
+            const payload = {
+                title,
+                subtitle,
+                url,
+                updatedAt: formattedDate
+            };
+
+            if (rowIndex === '') {
+                // 신규 생성
+                payload.action = "create";
             } else {
                 // 기존 수정
-                novels[index] = novelData;
+                payload.action = "update";
+                payload.rowIndex = rowIndex;
             }
 
-            localStorage.setItem('novels', JSON.stringify(novels));
-            renderBooks();
-            closeModal();
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const resData = await response.json();
+                if (resData.result === 'success') {
+                    alert('저장되었습니다.');
+                    closeModal();
+                    fetchNovels(); // 저장 성공 시 리스트 동기화 호출
+                } else {
+                    alert('저장에 실패했습니다: ' + resData.message);
+                }
+            } catch (error) {
+                console.error("저장 통신 에러:", error);
+                alert('구글 시트 연동 중 에러가 발생했습니다.');
+            } finally {
+                btnSave.innerText = "저장";
+                btnSave.disabled = false;
+            }
         }
 
-        // 삭제 처리
-        function deleteBook() {
-            const index = document.getElementById('editIndex').value;
-            if (index !== '' && confirm('이 책을 삭제하시겠습니까?')) {
-                novels.splice(index, 1);
-                localStorage.setItem('novels', JSON.stringify(novels));
-                renderBooks();
-                closeModal();
+        // API 연동 삭제 처리
+        async function deleteBook() {
+            const rowIndex = document.getElementById('editRowIndex').value;
+            if (rowIndex !== '' && confirm('이 책을 삭제하시겠습니까?')) {
+                try {
+                    const response = await fetch(WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: "delete",
+                            rowIndex: rowIndex
+                        })
+                    });
+                    const resData = await response.json();
+                    if (resData.result === 'success') {
+                        alert('삭제되었습니다.');
+                        closeModal();
+                        fetchNovels();
+                    } else {
+                        alert('삭제 실패: ' + resData.message);
+                    }
+                } catch (error) {
+                    console.error("삭제 에러:", error);
+                    alert('통신 오류가 발생했습니다.');
+                }
             }
         }
 
@@ -432,8 +554,8 @@
             }
         }
 
-        // 최초 실행
-        renderBooks();
+        // 앱 구동 시 실시간 데이터 취소 호출
+        fetchNovels();
     </script>
 </body>
 </html>
