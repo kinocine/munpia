@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소설가의 방 (The Writer's Room)</title>
     <style>
+        /* 기본 스타일 및 서재 분위기 배경 */
         body {
             background-color: #1e1a17;
             color: #e6dfd3;
@@ -16,19 +16,23 @@
             flex-direction: column;
             align-items: center;
         }
+
         h1 {
             font-family: 'Georgia', serif;
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: #d4af37;
+            color: #d4af37; /* 금빛 타이틀 */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
+
         .subtitle {
             font-size: 1.1rem;
             color: #a89f91;
             margin-bottom: 40px;
             font-style: italic;
         }
+
+        /* 책장 레이아웃 */
         .bookshelf {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -36,20 +40,29 @@
             max-width: 1200px;
             width: 100%;
             padding: 20px;
-            border-bottom: 16px solid #3a2f28;
+            border-bottom: 16px solid #3a2f28; /* 책장 선반 느낌 */
             box-shadow: 0 20px 20px rgba(0,0,0,0.5);
             background: rgba(40, 32, 26, 0.5);
             border-radius: 8px;
+            box-sizing: border-box;
         }
+
+        /* 책 링크 및 오브젝트 */
+        .book-wrapper {
+            position: relative;
+            perspective: 1000px;
+        }
+
         .book-link {
             text-decoration: none;
             color: inherit;
             display: block;
-            perspective: 1000px;
         }
+
         .book {
-            border-left: 12px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 1px 1px 0px rgba(255,255,255,0.2);
+            border-left: 12px solid rgba(255, 255, 255, 0.15); /* 책등 효과 */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), 
+                        inset 1px 1px 0px rgba(255,255,255,0.2);
             border-radius: 3px 8px 8px 3px;
             height: 260px;
             padding: 20px 15px;
@@ -59,19 +72,174 @@
             box-sizing: border-box;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .book-link:hover .book {
+
+        .book-wrapper:hover .book {
             transform: rotateY(-10deg) translateZ(10px);
             box-shadow: 15px 15px 25px rgba(0,0,0,0.7);
         }
-        /* 색상 테마들 */
-        .red { background: linear-gradient(135deg, #4a1525 0%, #2c0b14 100%); }
-        .navy { background: linear-gradient(135deg, #1a2a3a 0%, #0d151d 100%); }
-        .green { background: linear-gradient(135deg, #1c352d 0%, #0e1b16 100%); }
-        .brown { background: linear-gradient(135deg, #543d2b 0%, #2e2116 100%); }
 
-        .book-title { font-size: 1.2rem; font-weight: bold; line-height: 1.4; color: #f4ebd9; word-break: keep-all; margin-bottom: 5px; }
-        .book-subtitle { font-size: 0.85rem; color: #c2b59b; line-height: 1.3; }
-        .book-meta { font-size: 0.8rem; color: #a89f91; text-align: right; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 8px; }
+        /* 책 표지 4가지 색상 랜덤 순환용 */
+        .color-0 { background: linear-gradient(135deg, #4a1525 0%, #2c0b14 100%); } /* 레드 */
+        .color-1 { background: linear-gradient(135deg, #1a2a3a 0%, #0d151d 100%); } /* 네이비 */
+        .color-2 { background: linear-gradient(135deg, #1c352d 0%, #0e1b16 100%); } /* 그린 */
+        .color-3 { background: linear-gradient(135deg, #543d2b 0%, #2e2116 100%); } /* 브라운 */
+
+        .book-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #f4ebd9;
+            word-break: keep-all;
+            margin-bottom: 6px;
+        }
+
+        .book-subtitle {
+            font-size: 0.85rem;
+            color: #c2b59b;
+            line-height: 1.3;
+        }
+
+        .book-meta {
+            font-size: 0.75rem;
+            color: #a89f91;
+            text-align: right;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 8px;
+        }
+
+        /* 책 수정용 관리 버턴 */
+        .btn-edit {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .book-wrapper:hover .btn-edit {
+            opacity: 1;
+        }
+
+        /* [+] 추가 버튼 디자인 */
+        .add-card {
+            border: 2px dashed #54453b;
+            border-radius: 8px;
+            height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+            color: #8c7b6e;
+        }
+
+        .add-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .add-text {
+            font-size: 0.9rem;
+        }
+
+        /* 입력 팝업(모달) 스타일 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: #2a221d;
+            border: 1px solid #4d3e35;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: #d4af37;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #4d3e35;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #a89f91;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: #1e1a17;
+            border: 1px solid #4d3e35;
+            color: #e6dfd3;
+            padding: 10px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary { background: #d4af37; color: #1e1a17; }
+        .btn-primary:hover { background: #ecd06c; }
+        .btn-secondary { background: #4d3e35; color: #e6dfd3; }
+        .btn-secondary:hover { background: #5d4d42; }
+        .btn-danger { background: #8a2424; color: #fff; }
+        .btn-danger:hover { background: #b03535; }
     </style>
 </head>
 <body>
@@ -79,52 +247,193 @@
     <h1>소설가의 방</h1>
     <div class="subtitle">생각이 머무는 곳, 집필 중인 연작소설들</div>
 
-    <div class="bookshelf" id="bookshelf"></div>
+    <div class="bookshelf" id="bookshelf">
+        <!-- 책 리스트와 [+] 버튼이 자바스크립트로 그려집니다 -->
+    </div>
+
+    <!-- 책 입력/수정 모달창 -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">새 책 등록하기</h3>
+            <input type="hidden" id="editIndex" value="">
+            
+            <div class="form-group">
+                <label for="bookTitle">소설 제목</label>
+                <input type="text" id="bookTitle" placeholder="제목을 입력하세요" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="bookSubtitle">부제</label>
+                <input type="text" id="bookSubtitle" placeholder="소제목이나 부제를 입력하세요">
+            </div>
+            
+            <div class="form-group">
+                <label for="bookUrl">구글독스 URL</label>
+                <input type="url" id="bookUrl" placeholder="https://docs.google.com/..." required>
+            </div>
+
+            <div class="modal-actions">
+                <div>
+                    <button class="btn btn-danger" id="btnDelete" onclick="deleteBook()" style="display: none;">삭제</button>
+                </div>
+                <div>
+                    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+                    <button class="btn btn-primary" onclick="saveBook()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // ★ [입력 공간] 새로운 소설이 생각나거나 수정할 때 여기만 고치시면 됩니다!
-        // color 종류: 'red', 'navy', 'green', 'brown'
-        const novelList = [
+        // 초기 샘플 데이터 (로컬 스토리지에 데이터가 없을 때만 사용됨)
+        const defaultNovels = [
             {
                 title: "첫 번째 이야기 제목",
                 subtitle: "여기에 작은 부제가 들어갑니다",
                 url: "https://docs.google.com/document/d/YOUR_DOC_ID_1/edit",
-                wordCount: "4,200 자",
-                color: "red"
+                updatedAt: "2026-07-15"
             },
             {
                 title: "달 그림자를 밟는 밤",
                 subtitle: "사라진 기억에 관한 기록",
                 url: "https://docs.google.com/document/d/YOUR_DOC_ID_2/edit",
-                wordCount: "6,500 자",
-                color: "navy"
-            },
-            {
-                title: "세 번째 단편 제목",
-                subtitle: "부제는 이렇게 짧게도 가능합니다",
-                url: "https://docs.google.com/document/d/YOUR_DOC_ID_3/edit",
-                wordCount: "집필 중",
-                color: "green"
+                updatedAt: "2026-07-10"
             }
-            // 새로운 소설을 추가하려면 위에처럼 쉼표(,) 찍고 똑같이 중괄호 기입해서 늘려주면 됩니다.
         ];
 
-        // 데이터를 가지고 책 화면을 자동으로 그려주는 기능
+        // 로컬스토리지에서 데이터 불러오기
+        let novels = JSON.parse(localStorage.getItem('novels'));
+        if (!novels) {
+            novels = defaultNovels;
+            localStorage.setItem('novels', JSON.stringify(novels));
+        }
+
         const bookshelf = document.getElementById('bookshelf');
-        novelList.forEach(novel => {
-            const bookHtml = `
-                <a href="${novel.url}" target="_blank" class="book-link">
-                    <div class="book ${novel.color}">
-                        <div>
-                            <div class="book-title">${novel.title}</div>
-                            <div class="book-subtitle">${novel.subtitle}</div>
+        const modal = document.getElementById('modal');
+
+        // 화면 갱신 함수
+        function renderBooks() {
+            bookshelf.innerHTML = '';
+
+            // 1. 등록된 책들 그리기
+            novels.forEach((novel, index) => {
+                // 디자인 다양화를 위해 인덱스 기반으로 4개 배경색 무작위/순환 지정
+                const colorClass = `color-${index % 4}`;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'book-wrapper';
+                
+                wrapper.innerHTML = `
+                    <a href="${novel.url}" target="_blank" class="book-link">
+                        <div class="book ${colorClass}">
+                            <div>
+                                <div class="book-title">${novel.title}</div>
+                                <div class="book-subtitle">${novel.subtitle || ''}</div>
+                            </div>
+                            <div class="book-meta">${novel.updatedAt}</div>
                         </div>
-                        <div class="book-meta">${novel.wordCount}</div>
-                    </div>
-                </a>
+                    </a>
+                    <button class="btn-edit" onclick="openEditModal(${index})" title="수정">✏️</button>
+                `;
+                bookshelf.appendChild(wrapper);
+            });
+
+            // 2. 맨 끝에 [+] 카드 그리기
+            const addCard = document.createElement('div');
+            addCard.className = 'add-card';
+            addCard.onclick = () => openAddModal();
+            addCard.innerHTML = `
+                <span class="add-icon">+</span>
+                <span class="add-text">새 책 쓰기</span>
             `;
-            bookshelf.innerHTML += bookHtml;
-        });
+            bookshelf.appendChild(addCard);
+        }
+
+        // 모달 열기 (등록 모드)
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = '새 책 등록하기';
+            document.getElementById('editIndex').value = '';
+            document.getElementById('bookTitle').value = '';
+            document.getElementById('bookSubtitle').value = '';
+            document.getElementById('bookUrl').value = '';
+            document.getElementById('btnDelete').style.display = 'none';
+            modal.style.display = 'flex';
+        }
+
+        // 모달 열기 (수정 모드)
+        function openEditModal(index) {
+            event.stopPropagation(); // 책 링크 타지 않도록 방지
+            event.preventDefault();
+
+            const novel = novels[index];
+            document.getElementById('modalTitle').innerText = '소설 정보 수정';
+            document.getElementById('editIndex').value = index;
+            document.getElementById('bookTitle').value = novel.title;
+            document.getElementById('bookSubtitle').value = novel.subtitle || '';
+            document.getElementById('bookUrl').value = novel.url;
+            document.getElementById('btnDelete').style.display = 'inline-block';
+            modal.style.display = 'flex';
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 저장 처리 (등록 및 수정 공용)
+        function saveBook() {
+            const index = document.getElementById('editIndex').value;
+            const title = document.getElementById('bookTitle').value.trim();
+            const subtitle = document.getElementById('bookSubtitle').value.trim();
+            const url = document.getElementById('bookUrl').value.trim();
+
+            if (!title || !url) {
+                alert('제목과 구글독스 URL은 필수 입력 항목입니다.');
+                return;
+            }
+
+            // 오늘 날짜 자동 포맷팅 (YYYY-MM-DD)
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+            const novelData = { title, subtitle, url, updatedAt: formattedDate };
+
+            if (index === '') {
+                // 신규 등록
+                novels.push(novelData);
+            } else {
+                // 기존 수정
+                novels[index] = novelData;
+            }
+
+            localStorage.setItem('novels', JSON.stringify(novels));
+            renderBooks();
+            closeModal();
+        }
+
+        // 삭제 처리
+        function deleteBook() {
+            const index = document.getElementById('editIndex').value;
+            if (index !== '' && confirm('이 책을 삭제하시겠습니까?')) {
+                novels.splice(index, 1);
+                localStorage.setItem('novels', JSON.stringify(novels));
+                renderBooks();
+                closeModal();
+            }
+        }
+
+        // 외부 영역 클릭 시 모달 닫기
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // 최초 실행
+        renderBooks();
     </script>
 </body>
 </html>
