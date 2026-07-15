@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소설가의 방 (The Writer's Room)</title>
     <style>
-        /* 기본 스타일 및 서재 분위기 배경 */
+        /* 밝고 화사한 내추럴 우드 도서실 스타일 배경 */
         body {
-            background-color: #1e1a17;
-            color: #e6dfd3;
+            background-color: #f7f5f0;
+            color: #4a3e3d;
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
             margin: 0;
             padding: 20px 10px;
@@ -22,8 +22,8 @@
             font-size: 2rem;
             margin-top: 10px;
             margin-bottom: 15px;
-            color: #d4af37; /* 금빛 타이틀 */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #8c6239; /* 포근한 나무색 타이틀 */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         /* 검색창 영역 */
@@ -37,34 +37,36 @@
 
         .search-input {
             width: 100%;
-            background: #2a221d;
-            border: 1px solid #54453b;
+            background: #ffffff;
+            border: 1px solid #d1c7bd;
             border-radius: 20px;
             padding: 10px 18px;
-            color: #e6dfd3;
+            color: #4a3e3d;
             font-size: 0.95rem;
             box-sizing: border-box;
             outline: none;
             transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .search-input:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+            border-color: #b8936e;
+            box-shadow: 0 0 8px rgba(184, 147, 110, 0.3);
         }
 
-        /* 책장 레이아웃 (기본 PC는 다단 구성, 모바일에서 한 줄에 4개) */
+        /* 밝은 원목 책장 레이아웃 */
         .bookshelf {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 한 라인에 무조건 4개 */
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr); /* 한 라인에 무조건 3개 배치 */
+            gap: 16px; /* 3개 배치에 맞춰 간격 소폭 조정 */
             max-width: 900px;
             width: 100%;
-            padding: 15px 10px;
-            border-bottom: 12px solid #3a2f28; /* 책장 선반 느낌 */
-            box-shadow: 0 15px 15px rgba(0,0,0,0.5);
-            background: rgba(40, 32, 26, 0.5);
+            padding: 20px 12px;
+            border-bottom: 14px solid #c2a689; /* 내추럴 원목 선반 느낌 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            background: #fdfbf7;
             border-radius: 8px;
+            border: 1px solid #eadecc;
             box-sizing: border-box;
         }
 
@@ -81,14 +83,14 @@
             display: block;
         }
 
-        /* 모바일 4단 정렬을 위한 콤팩트한 북 스타일 */
+        /* 책 스타일 양식 수정 */
         .book {
-            border-left: 6px solid rgba(255, 255, 255, 0.15); /* 책등 효과 */
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.5), 
-                        inset 1px 1px 0px rgba(255,255,255,0.15);
+            border-left: 6px solid rgba(255, 255, 255, 0.25); /* 책등 입체 효과 */
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.12), 
+                        inset 1px 1px 0px rgba(255,255,255,0.2);
             border-radius: 2px 5px 5px 2px;
-            height: 140px; /* 모바일 대응으로 높이 축소 */
-            padding: 10px 6px;
+            height: 140px; 
+            padding: 10px 8px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -99,70 +101,81 @@
 
         .book-wrapper:hover .book {
             transform: rotateY(-8deg) translateZ(5px);
-            box-shadow: 8px 8px 15px rgba(0,0,0,0.6);
+            box-shadow: 5px 8px 15px rgba(0,0,0,0.18);
         }
 
-        /* 책 표지 4가지 색상 랜덤 순환용 */
-        .color-0 { background: linear-gradient(135deg, #4a1525 0%, #2c0b14 100%); } /* 레드 */
-        .color-1 { background: linear-gradient(135deg, #1a2a3a 0%, #0d151d 100%); } /* 네이비 */
-        .color-2 { background: linear-gradient(135deg, #1c352d 0%, #0e1b16 100%); } /* 그린 */
-        .color-3 { background: linear-gradient(135deg, #543d2b 0%, #2e2116 100%); } /* 브라운 */
+        /* 감성적이고 화사한 파스텔 북 표지 색상 */
+        .color-0 { background: linear-gradient(135deg, #7b9acc 0%, #5e7fa8 100%); } /* 세레니티 블루 */
+        .color-1 { background: linear-gradient(135deg, #a7c796 0%, #85a673 100%); } /* 세이지 그린 */
+        .color-2 { background: linear-gradient(135deg, #df9898 0%, #bd7373 100%); } /* 인디핑크 */
+        .color-3 { background: linear-gradient(135deg, #d9b48f 0%, #b8936e 100%); } /* 카멜 베이지 */
 
         .book-title {
-            font-size: 0.75rem; /* 모바일 가독성을 위해 크기 조절 */
+            font-size: 0.75rem;
             font-weight: bold;
             line-height: 1.3;
-            color: #f4ebd9;
+            color: #ffffff;
             word-break: break-all;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* 세 줄 제한 */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             margin-bottom: 4px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
         .book-subtitle {
             font-size: 0.6rem;
-            color: #c2b59b;
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.2;
             display: -webkit-box;
-            -webkit-line-clamp: 2; /* 두 줄 제한 */
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+
+        /* 하단 메인 레이아웃 (날짜 + 수정버튼 배치용 flex박스) */
+        .book-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px dashed rgba(255, 255, 255, 0.25);
+            padding-top: 5px;
+            margin-top: 4px;
         }
 
         .book-meta {
             font-size: 0.55rem;
-            color: #a89f91;
-            text-align: right;
-            border-top: 1px dashed rgba(255, 255, 255, 0.1);
-            padding-top: 4px;
+            color: rgba(255, 255, 255, 0.9);
             white-space: nowrap;
         }
 
-        /* 책 수정용 관리 버튼 */
+        /* [수정제안] 하단 날짜 옆으로 이동 및 간결한 아이콘형 버튼 디자인 변경 */
         .btn-edit {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
             border: none;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
+            border-radius: 4px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.55rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.8; /* 모바일 조작 편의성을 위해 기본 노출 상승 */
-            z-index: 10;
+            transition: background 0.2s;
+            box-sizing: border-box;
+            padding: 0;
         }
 
-        /* [+] 추가 버튼 디자인 */
+        .btn-edit:hover {
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        /* [+] 추가 버튼 디자인 디자인 톤 조정 */
         .add-card {
-            border: 2px dashed #54453b;
+            border: 2px dashed #c2a689;
             border-radius: 5px;
             height: 140px;
             display: flex;
@@ -171,14 +184,15 @@
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s, border-color 0.3s;
-            color: #8c7b6e;
+            color: #a88d74;
             box-sizing: border-box;
+            background: #ffffff;
         }
 
         .add-card:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: #d4af37;
-            color: #d4af37;
+            background: #fdfaf5;
+            border-color: #b8936e;
+            color: #b8936e;
         }
 
         .add-icon {
@@ -191,100 +205,102 @@
             font-size: 0.7rem;
         }
 
-        /* 입력 팝업(모달) 스타일 */
+        /* 입력 팝업(모달) 스타일 모던 라이트 톤 변경 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(40, 35, 30, 0.4);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 100;
+            backdrop-filter: blur(2px);
         }
 
         .modal-content {
-            background: #2a221d;
-            border: 1px solid #4d3e35;
-            border-radius: 10px;
-            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e5dec9;
+            border-radius: 12px;
+            padding: 24px;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             box-sizing: border-box;
         }
 
         .modal-title {
             font-size: 1.15rem;
-            color: #d4af37;
+            color: #8c6239;
             margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #4d3e35;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #eeeada;
             padding-bottom: 8px;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .form-group label {
             display: block;
             font-size: 0.8rem;
-            color: #a89f91;
-            margin-bottom: 4px;
+            color: #706259;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         .form-group input {
             width: 100%;
-            background: #1e1a17;
-            border: 1px solid #4d3e35;
-            color: #e6dfd3;
-            padding: 8px;
-            border-radius: 4px;
+            background: #faf9f5;
+            border: 1px solid #dcd5c9;
+            color: #4a3e3d;
+            padding: 9px;
+            border-radius: 6px;
             box-sizing: border-box;
             font-size: 0.9rem;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #d4af37;
+            border-color: #b8936e;
+            background: #ffffff;
         }
 
         .modal-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 22px;
         }
 
         .btn {
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 9px 18px;
+            border-radius: 6px;
             border: none;
             font-size: 0.85rem;
             cursor: pointer;
             font-weight: bold;
         }
 
-        .btn-primary { background: #d4af37; color: #1e1a17; }
-        .btn-primary:hover { background: #ecd06c; }
-        .btn-secondary { background: #4d3e35; color: #e6dfd3; }
-        .btn-secondary:hover { background: #5d4d42; }
-        .btn-danger { background: #8a2424; color: #fff; }
-        .btn-danger:hover { background: #b03535; }
+        .btn-primary { background: #b8936e; color: #fff; }
+        .btn-primary:hover { background: #a37f59; }
+        .btn-secondary { background: #eadecc; color: #5c4f46; }
+        .btn-secondary:hover { background: #dccbb5; }
+        .btn-danger { background: #c94c4c; color: #fff; }
+        .btn-danger:hover { background: #b33b3b; }
 
-        /* 로딩 스피너 */
         .loading {
-            grid-column: span 4;
+            grid-column: span 3; /* 3열 배치에 맞춰 span 크기 변경 */
             text-align: center;
             font-size: 0.9rem;
-            color: #d4af37;
+            color: #a37f59;
             padding: 30px 0;
         }
 
-        /* 데스크톱 크기 보정 (데스크톱에서도 레이아웃이 일그러지지 않도록 조절) */
+        /* 데스크톱 크기 보정 */
         @media (min-width: 600px) {
             .book {
                 height: 180px;
-                padding: 15px 10px;
+                padding: 15px 12px;
             }
             .book-title {
                 font-size: 0.95rem;
@@ -293,6 +309,11 @@
                 font-size: 0.75rem;
             }
             .book-meta {
+                font-size: 0.65rem;
+            }
+            .btn-edit {
+                width: 20px;
+                height: 20px;
                 font-size: 0.65rem;
             }
             .add-card {
@@ -352,14 +373,12 @@
     </div>
 
     <script>
-        // ⚠️ 구글 앱스 스크립트 배포 후 얻은 웹 앱 URL을 여기에 붙여넣어 주세요!
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwc0guFpQ6vaMtbcyw9SAVmOXGj6QpFW7uXrb4xtdLPVJTX_Pfk4iomMdsGYLAt7C3qDg/exec"; 
 
-        let novels = []; // 시트에서 가져온 전체 책 데이터 저장용
+        let novels = []; 
         const bookshelf = document.getElementById('bookshelf');
         const modal = document.getElementById('modal');
 
-        // 앱스 스크립트 API를 활용한 데이터 호출 (GET)
         async function fetchNovels() {
             try {
                 bookshelf.innerHTML = '<div class="loading">서재에서 책을 꺼내오는 중입니다...</div>';
@@ -369,17 +388,14 @@
                 renderBooks(novels);
             } catch (error) {
                 console.error("데이터 가져오기 실패:", error);
-                bookshelf.innerHTML = '<div class="loading" style="color:#b03535;">책을 불러오지 못했습니다.<br>API 주소 확인이 필요합니다.</div>';
+                bookshelf.innerHTML = '<div class="loading" style="color:#b33b3b;">책을 불러오지 못했습니다.<br>API 주소 확인이 필요합니다.</div>';
             }
         }
 
-        // 화면 갱신 함수 (필터된 배열을 매개변수로 받음)
         function renderBooks(dataList) {
             bookshelf.innerHTML = '';
 
-            // 1. 책 리스트 그리기
             dataList.forEach((novel) => {
-                // 디자인 무작위 순환용 인덱스는 API 행번호 기준으로 자연스럽게 설정
                 const colorIndex = (novel.rowIndex || 0) % 4;
                 const colorClass = `color-${colorIndex}`;
 
@@ -393,15 +409,16 @@
                                 <div class="book-title">${novel.title}</div>
                                 <div class="book-subtitle">${novel.subtitle || ''}</div>
                             </div>
-                            <div class="book-meta">${novel.updatedAt ? novel.updatedAt.substring(0, 10) : ''}</div>
+                            <div class="book-footer">
+                                <div class="book-meta">${novel.updatedAt ? novel.updatedAt.substring(0, 10) : ''}</div>
+                                <button class="btn-edit" onclick="openEditModal(event, ${novel.rowIndex})" title="수정">✏️</button>
+                            </div>
                         </div>
                     </a>
-                    <button class="btn-edit" onclick="openEditModal(${novel.rowIndex})" title="수정">✏️</button>
                 `;
                 bookshelf.appendChild(wrapper);
             });
 
-            // 2. 맨 끝에 [+] 카드 그리기
             const addCard = document.createElement('div');
             addCard.className = 'add-card';
             addCard.onclick = () => openAddModal();
@@ -412,7 +429,6 @@
             bookshelf.appendChild(addCard);
         }
 
-        // 실시간 검색 기능 (소설 제목 및 부제 검색 매칭)
         function filterBooks() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             if (!query) {
@@ -426,7 +442,6 @@
             renderBooks(filtered);
         }
 
-        // 모달 열기 (등록 모드)
         function openAddModal() {
             document.getElementById('modalTitle').innerText = '새 책 등록하기';
             document.getElementById('editRowIndex').value = '';
@@ -437,9 +452,8 @@
             modal.style.display = 'flex';
         }
 
-        // 모달 열기 (수정 모드 - 시트의 행 번호(rowIndex) 기준)
-        function openEditModal(rowIndex) {
-            event.stopPropagation(); // 책 링크 타기 방지
+        function openEditModal(event, rowIndex) {
+            event.stopPropagation(); 
             event.preventDefault();
 
             const novel = novels.find(n => n.rowIndex === rowIndex);
@@ -454,12 +468,10 @@
             modal.style.display = 'flex';
         }
 
-        // 모달 닫기
         function closeModal() {
             modal.style.display = 'none';
         }
 
-        // API 연동 저장 처리 (등록 및 수정 공용 POST 통신)
         async function saveBook() {
             const rowIndex = document.getElementById('editRowIndex').value;
             const title = document.getElementById('bookTitle').value.trim();
@@ -471,7 +483,6 @@
                 return;
             }
 
-            // 오늘 날짜 자동 포맷팅 (YYYY-MM-DD)
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -490,10 +501,8 @@
             };
 
             if (rowIndex === '') {
-                // 신규 생성
                 payload.action = "create";
             } else {
-                // 기존 수정
                 payload.action = "update";
                 payload.rowIndex = rowIndex;
             }
@@ -507,7 +516,7 @@
                 if (resData.result === 'success') {
                     alert('저장되었습니다.');
                     closeModal();
-                    fetchNovels(); // 저장 성공 시 리스트 동기화 호출
+                    fetchNovels(); 
                 } else {
                     alert('저장에 실패했습니다: ' + resData.message);
                 }
@@ -520,7 +529,6 @@
             }
         }
 
-        // API 연동 삭제 처리
         async function deleteBook() {
             const rowIndex = document.getElementById('editRowIndex').value;
             if (rowIndex !== '' && confirm('이 책을 삭제하시겠습니까?')) {
@@ -547,14 +555,12 @@
             }
         }
 
-        // 외부 영역 클릭 시 모달 닫기
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
 
-        // 앱 구동 시 실시간 데이터 취소 호출
         fetchNovels();
     </script>
 </body>
