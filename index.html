@@ -1,1 +1,130 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소설가의 방 (The Writer's Room)</title>
+    <style>
+        body {
+            background-color: #1e1a17;
+            color: #e6dfd3;
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a89f91;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .bookshelf {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 40px 30px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+            border-bottom: 16px solid #3a2f28;
+            box-shadow: 0 20px 20px rgba(0,0,0,0.5);
+            background: rgba(40, 32, 26, 0.5);
+            border-radius: 8px;
+        }
+        .book-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            perspective: 1000px;
+        }
+        .book {
+            border-left: 12px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 1px 1px 0px rgba(255,255,255,0.2);
+            border-radius: 3px 8px 8px 3px;
+            height: 260px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-link:hover .book {
+            transform: rotateY(-10deg) translateZ(10px);
+            box-shadow: 15px 15px 25px rgba(0,0,0,0.7);
+        }
+        /* 색상 테마들 */
+        .red { background: linear-gradient(135deg, #4a1525 0%, #2c0b14 100%); }
+        .navy { background: linear-gradient(135deg, #1a2a3a 0%, #0d151d 100%); }
+        .green { background: linear-gradient(135deg, #1c352d 0%, #0e1b16 100%); }
+        .brown { background: linear-gradient(135deg, #543d2b 0%, #2e2116 100%); }
+
+        .book-title { font-size: 1.2rem; font-weight: bold; line-height: 1.4; color: #f4ebd9; word-break: keep-all; margin-bottom: 5px; }
+        .book-subtitle { font-size: 0.85rem; color: #c2b59b; line-height: 1.3; }
+        .book-meta { font-size: 0.8rem; color: #a89f91; text-align: right; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>소설가의 방</h1>
+    <div class="subtitle">생각이 머무는 곳, 집필 중인 연작소설들</div>
+
+    <div class="bookshelf" id="bookshelf"></div>
+
+    <script>
+        // ★ [입력 공간] 새로운 소설이 생각나거나 수정할 때 여기만 고치시면 됩니다!
+        // color 종류: 'red', 'navy', 'green', 'brown'
+        const novelList = [
+            {
+                title: "첫 번째 이야기 제목",
+                subtitle: "여기에 작은 부제가 들어갑니다",
+                url: "https://docs.google.com/document/d/YOUR_DOC_ID_1/edit",
+                wordCount: "4,200 자",
+                color: "red"
+            },
+            {
+                title: "달 그림자를 밟는 밤",
+                subtitle: "사라진 기억에 관한 기록",
+                url: "https://docs.google.com/document/d/YOUR_DOC_ID_2/edit",
+                wordCount: "6,500 자",
+                color: "navy"
+            },
+            {
+                title: "세 번째 단편 제목",
+                subtitle: "부제는 이렇게 짧게도 가능합니다",
+                url: "https://docs.google.com/document/d/YOUR_DOC_ID_3/edit",
+                wordCount: "집필 중",
+                color: "green"
+            }
+            // 새로운 소설을 추가하려면 위에처럼 쉼표(,) 찍고 똑같이 중괄호 기입해서 늘려주면 됩니다.
+        ];
+
+        // 데이터를 가지고 책 화면을 자동으로 그려주는 기능
+        const bookshelf = document.getElementById('bookshelf');
+        novelList.forEach(novel => {
+            const bookHtml = `
+                <a href="${novel.url}" target="_blank" class="book-link">
+                    <div class="book ${novel.color}">
+                        <div>
+                            <div class="book-title">${novel.title}</div>
+                            <div class="book-subtitle">${novel.subtitle}</div>
+                        </div>
+                        <div class="book-meta">${novel.wordCount}</div>
+                    </div>
+                </a>
+            `;
+            bookshelf.innerHTML += bookHtml;
+        });
+    </script>
+</body>
+</html>
