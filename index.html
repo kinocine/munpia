@@ -23,11 +23,26 @@
             align-items: center;
         }
 
+        /* 📌 제목 영역 레이아웃 수정 (아이콘과 텍스트 정렬) */
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .title-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
         h1 {
             font-family: 'Georgia', serif;
             font-size: 2rem;
-            margin-top: 10px;
-            margin-bottom: 15px;
+            margin: 0;
             color: #8c6239; /* 포근한 나무색 타이틀 */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
@@ -304,6 +319,13 @@
 
         /* 데스크톱 크기 보정 */
         @media (min-width: 600px) {
+            .title-container {
+                gap: 16px;
+            }
+            .title-logo {
+                width: 48px;
+                height: 48px;
+            }
             .book {
                 height: 180px;
                 padding: 15px 12px;
@@ -336,7 +358,11 @@
 </head>
 <body>
 
-    <h1>소설가의 방</h1>
+    <!-- 📌 상단 타이틀 영역 구조 수정: 이미지와 제목 결합 -->
+    <div class="title-container">
+        <img class="title-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgvQX2i_Mvoy-GMc0P09YSaLzeCwOvmCcgOFjAADQmEOtFxtK7FM63RPo0_PMGNuxDKSfijZmJrLPDaVfHtuxinPD4XYuhXmXCij0FRR_gpsMlWZ1eyZZL0t2CKH3cUCgkXCEg_P4oYMfcTERkHob0DSIYg2PrdtMA8GAweiRQ1EAsvkq6RKjSLNdQra7I2/s320/20260721_145044.png" alt="소설가의 방 아이콘">
+        <h1>소설가의 방</h1>
+    </div>
     
     <div class="search-container">
         <input type="text" id="searchInput" class="search-input" placeholder="소설 제목 또는 부제 검색..." oninput="filterBooks()">
