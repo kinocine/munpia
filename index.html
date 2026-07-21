@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>소설가의 방 (The Writer's Room)</title>
     
-    <!-- 📌 외부 주소 차단 문제를 완벽하게 해결하는 내부 경로 지정 -->
-    <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
+<!-- 1. PC 브라우저 탭 및 일반 모바일 브라우저용 (상대 경로 지정) -->
+<link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+
+<!-- 2. 안드로이드 크롬 '홈 화면에 추가' 엔진용 (최상위 도메인 기준 절대 경로 지정) -->
+<link rel="shortcut icon" sizes="192x192" href="/munpia/icon-192.png">
+
+<!-- 3. iOS 사파리 홈 화면용 -->
+<link rel="apple-touch-icon" href="./icon-192.png">
 
 <style>
     
